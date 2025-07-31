@@ -8,7 +8,10 @@ local outline_parser = require('neotest-dart.lsp_outline_parser')
 ---@type neotest.Adapter
 local adapter = { name = 'neotest-dart' }
 
-adapter.root = lib.files.match_root_pattern('pubspec.yaml')
+-- Use the workspace root because the rest of the code supports monorepos
+adapter.root = function()
+    return vim.loop.cwd()
+end
 
 --- Command to use for running tests. Value is set from config
 local command = 'flutter'
